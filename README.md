@@ -1,6 +1,6 @@
 # AWS Appsync API
 
-https://registry.terraform.io/modules/Xerris-Terraform-Modules/event-lambda/aws/latest
+https://registry.terraform.io/modules/Xerris-Terraform-Modules/appsync-api/aws/latest
 
 This is designed to bootstrap an Appsync API with the ability to add direct lambda resolvers
 
