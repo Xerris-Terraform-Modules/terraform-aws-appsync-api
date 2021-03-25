@@ -4,6 +4,32 @@ https://registry.terraform.io/modules/Xerris-Terraform-Modules/appsync-api/aws/l
 
 This is designed to bootstrap an Appsync API with the ability to add direct lambda resolvers
 
+## Example usage:
+
+```
+module "foe_api" {
+    source = "github.com/xerris/aws-modules//lambdaSourceAppsync"
+    name = "${var.env}-foe-api"
+    schema = file("schema.graphql")
+
+    env = var.env
+    region = var.region
+    account_id = var.account_id
+    ecr_name = "foe_base"
+    image_uri = var.image_tag
+    cognito_id = aws_cognito_user_pool.primarypool.id
+
+    resolvers = {
+        "JobQueryResolver" = {
+            description = "jobQuery"
+            type = "Query"
+            field = "getJob"
+            entrypoint = "laprairie.foe::laprairie.foe.Handlers.JobHandler::GetAllJobs"
+        }
+    }
+}
+```
+
 
 ## Requirements
 
