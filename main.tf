@@ -5,7 +5,7 @@ resource "aws_appsync_graphql_api" "foe_api" {
   authentication_type = "AMAZON_COGNITO_USER_POOLS"
   user_pool_config {
     aws_region     = var.region
-    default_action = "DENY"
+    default_action = "ALLOW"
     user_pool_id   = var.cognito_id
   }
 }
