@@ -57,7 +57,7 @@ resource "aws_appsync_resolver" "lambda_resolver" {
 {
     "version" : "2017-02-28",
     "operation": "Invoke",
-    "payload": $util.toJson($context.arguments)
+    "payload": $util.toJson($context)
 }
 EOF
   response_template = "$util.toJson($ctx.result)"
