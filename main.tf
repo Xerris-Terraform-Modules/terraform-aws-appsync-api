@@ -27,3 +27,13 @@ module "lambda_source" {
     entrypoint = lookup(each.value, "entrypoint", null)
     appsync_id = aws_appsync_graphql_api.foe_api.id
 }
+
+data "external" "graphql_endpoint" {
+  program = [
+    "bash",
+    "${path.module}/get-graphql-endpoint.sh",
+  ]
+  query = {
+    api_id = var.graphql_api_id
+  }
+}
