@@ -34,6 +34,6 @@ data "external" "graphql_endpoint" {
     "${path.module}/get-graphql-endpoint.sh",
   ]
   query = {
-    api_id = var.graphql_api_id
+    api_id = aws_appsync_graphql_api.foe_api.id
   }
 }
