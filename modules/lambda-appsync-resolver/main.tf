@@ -192,7 +192,7 @@ data "aws_iam_policy_document" "lambda_policy_document" {
 }
 resource "aws_iam_policy" "lambda_policy" {
   name   = var.function_name
-  policy = data.aws_iam_policy_document.lambda_logging.json
+  policy = data.aws_iam_policy_document.lambda_policy_document.json
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
