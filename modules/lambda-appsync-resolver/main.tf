@@ -83,7 +83,7 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
-data "aws_iam_policy_document" "lambda_logging" {
+data "aws_iam_policy_document" "lambda_policy_document" {
   statement {
     effect = "Allow"
     actions = [
@@ -96,14 +96,103 @@ data "aws_iam_policy_document" "lambda_logging" {
   statement {
     effect = "Allow"
     actions = [
+      "ec2:CreateNetworkInterface",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DeleteNetworkInterface",
+    ]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
       "secretsmanager:GetSecretValue",
     ]
     resources = ["*"]
   }
+  dynamic "statement" {
+    for_each = var.s3_readwrite_arn_iam_list 
+    content {
+        effect = "Allow"
+        actions = [
+      "s3:HeadBucket",
+      "s3:PutObject",
+      "s3:GetObject",
+      "s3:ListBucket"
+        ]
+        resources = [
+        statement.value,
+        "${statement.value}/*",
+        ]
+    }
+  }
+  dynamic "statement" {
+    for_each = var.s3_read_arn_iam_list 
+    content {
+        effect = "Allow"
+        actions = [
+      "s3:HeadBucket",
+      "s3:GetObject",
+      "s3:ListBucket"
+        ]
+        resources = [
+        statement.value,
+        "${statement.value}/*",
+        ]
+    }
+  }
+  dynamic "statement" {
+    for_each = var.dynamodb_readwrite_arn_iam_list 
+    content {
+    effect = "Allow"
+    actions = [
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+      "dynamodb:UpdateItem",
+      "dynamodb:DeleteItem",
+      "dynamodb:Query",
+      "dynamodb:DescribeTable"
+    ]
+    resources = [statement.value]
+    }
+  }
+    dynamic "statement" {
+    for_each = var.dynamodb_read_arn_iam_list 
+    content {
+    effect = "Allow"
+    actions = [
+      "dynamodb:GetItem",
+      "dynamodb:Query",
+      "dynamodb:DescribeTable"
+    ]
+    resources = [statement.value]
+    }
+  }
+  dynamic "statement" {
+    for_each = var.sqs_arn_iam_list 
+    content {
+    effect = "Allow"
+    actions = [
+      "sqs:ReceiveMessage",
+      "sqs:GetQueueAttributes",
+      "sqs:DeleteMessage",
+    ]
+    resources = [statement.value]
+    }
+  }
+  dynamic "statement" {
+    for_each = var.lambda_arn_iam_list 
+    content {
+    effect = "Allow"
+    actions = [
+      "lambda:*",
+    ]
+    resources = [statement.value]
+    }
+  }
 }
 resource "aws_iam_policy" "lambda_policy" {
   name   = var.function_name
-  policy = data.aws_iam_policy_document.lambda_logging.json
+  policy = data.aws_iam_policy_document.lambda_policy_document.json
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {

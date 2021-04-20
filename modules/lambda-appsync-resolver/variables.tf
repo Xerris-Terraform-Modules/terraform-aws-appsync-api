@@ -19,3 +19,39 @@ variable "image_uri" {
 variable "appsync_id" {
     description = "ID of Appsync to attach to"
 }
+///////IAM Variables//////////////////////////////////////////////////
+variable "s3_readwrite_arn_iam_list" {
+    default     = []
+    type        = list(string)
+    description = "List of the s3 arns you want the lambda to have read/write iam access to."
+}
+variable "s3_read_arn_iam_list" {
+    default     = []
+    type        = list(string)
+    description = "List of the s3 arns you want the lambda to have read iam access to."
+}
+variable "sqs_arn_iam_list" {
+    default     = []
+    type        = list(string)
+    description = "List of the sqs arns you want the lambda to have iam access to."
+}
+variable "dynamodb_readwrite_arn_iam_list" {
+    default     = []
+    type        = list(string)
+    description = "List of the dynamodb arns you want the lambda to have read/write iam access to."
+}
+variable "dynamodb_read_arn_iam_list" {
+    default     = []
+    type        = list(string)
+    description = "List of the dynamodb arns you want the lambda to have read iam access to."
+}
+variable "secretsmanager_arn_iam_list" {
+    default     = []
+    type        = list(string)
+    description = "List of the secretsmanager arns you want the lambda to have iam access to."
+}
+variable "lambda_arn_iam_list" {
+    default     = []
+    type        = list(string)
+    description = "List of the lambda arns you want the lambda to have iam access to. Probably will depricate, use with caution"
+}
