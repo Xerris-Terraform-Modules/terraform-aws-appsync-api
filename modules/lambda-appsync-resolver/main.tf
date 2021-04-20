@@ -83,7 +83,7 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
-data "aws_iam_policy_document" "lambda_dyn_policy" {
+data "aws_iam_policy_document" "lambda_policy_document" {
   statement {
     effect = "Allow"
     actions = [
@@ -141,16 +141,6 @@ data "aws_iam_policy_document" "lambda_dyn_policy" {
     }
   }
   dynamic "statement" {
-    for_each = var.secretsmanager_arn_iam_list 
-    content {
-    effect = "Allow"
-    actions = [
-      "secretsmanager:GetSecretValue",
-    ]
-    resources = [statement.value]
-    }
-  }
-  dynamic "statement" {
     for_each = var.dynamodb_readwrite_arn_iam_list 
     content {
     effect = "Allow"
@@ -202,7 +192,7 @@ data "aws_iam_policy_document" "lambda_dyn_policy" {
 }
 resource "aws_iam_policy" "lambda_policy" {
   name   = var.function_name
-  policy = data.aws_iam_policy_document.lambda_dyn_policy.json
+  policy = data.aws_iam_policy_document.lambda_policy_document.json
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
