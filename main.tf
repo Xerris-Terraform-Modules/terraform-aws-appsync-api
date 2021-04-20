@@ -23,7 +23,7 @@ module "lambda_source" {
     function_name = each.key
     description = lookup(each.value, "description", null)
     type = lookup(each.value, "type", null)
-    dynamodb_readwrite_arn_iam_list = lookup(each.value, "dynamodb_readwrite_arn_iam_list", null)
+    dynamodb_readwrite_arn_iam_list = lookup(each.value, "dynamodb_readwrite_arn_iam_list", [])
     field = lookup(each.value, "field", null)
     entrypoint = lookup(each.value, "entrypoint", null)
     appsync_id = aws_appsync_graphql_api.foe_api.id
