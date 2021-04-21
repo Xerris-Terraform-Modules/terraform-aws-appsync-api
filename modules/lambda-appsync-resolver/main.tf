@@ -219,5 +219,4 @@ resource "aws_lambda_function" "appsync_lambda" {
       security_group_ids  = var.aws_security_group
     }
   }
-
 }
