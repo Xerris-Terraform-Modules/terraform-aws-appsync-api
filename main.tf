@@ -32,7 +32,7 @@ module "lambda_source" {
     lambda_arn_iam_list = lookup(each.value, "lambda_arn_iam_list", [])
     field = lookup(each.value, "field", null)
     entrypoint = lookup(each.value, "entrypoint", null)
-    subnet_ids = lookup(each.value, "subnet_ids", [])
-    vpc_security_group_ids = lookup(each.value, "vpc_security_group_ids", [])
+    subnet_ids = lookup(each.value, "subnet_ids", null)
+    vpc_security_group_ids = lookup(each.value, "vpc_security_group_ids", null)
     appsync_id = aws_appsync_graphql_api.foe_api.id
 }

@@ -200,14 +200,8 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   policy_arn    = aws_iam_policy.lambda_policy.arn
 }
 
-resource "time_sleep" "wait_30_seconds" {
-  depends_on = ["aws_iam_role_policy_attachment.lambda_logs"]
-
-  create_duration = "16s"
-}
 
 resource "aws_lambda_function" "appsync_lambda" {
-  depends_on = ["time_sleep.wait_30_seconds"]
   function_name        = var.function_name
   description          = var.description
   timeout              = 30
@@ -219,11 +213,11 @@ resource "aws_lambda_function" "appsync_lambda" {
   package_type         = "Image"
   
   
-  vpc_config {
-    ##for_each = var.subnet_ids != [] && var.vpc_security_group_ids != [] ? [true] : []
-    
-    subnet_ids       = var.subnet_ids == [] ? [] : var.subnet_ids
-    security_group_ids  = var.vpc_security_group_ids == [] ? [] : var.vpc_security_group_ids
-    
+  dynamic "vpc_config" {
+    for_each = var.subnet_ids != null && var.vpc_security_group_ids != null ? [true] : []
+    content {
+      subnet_ids       = var.subnet_ids 
+      security_group_ids  = var.vpc_security_group_ids 
+    }
   }
 }
