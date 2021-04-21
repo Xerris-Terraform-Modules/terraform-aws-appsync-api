@@ -220,10 +220,10 @@ resource "aws_lambda_function" "appsync_lambda" {
   
   
   dynamic "vpc_config" {
-    for_each = var.subnet_ids != [] && var.vpc_security_group_ids != [] ? [true] : []
+    ##for_each = var.subnet_ids != [] && var.vpc_security_group_ids != [] ? [true] : []
     content {
-      subnet_ids       = var.subnet_ids
-      security_group_ids  = var.vpc_security_group_ids
+      subnet_ids       = var.subnet_ids == [] ? [] : var.subnet_ids
+      security_group_ids  = var.vpc_security_group_ids == [] ? [] : var.vpc_security_group_ids
     }
   }
 }
