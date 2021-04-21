@@ -210,7 +210,7 @@ resource "aws_lambda_function" "appsync_lambda" {
   }
   image_uri            = var.image_uri
   package_type         = "Image"
-  vpc_subnet_ids      != [] ? var.subnet_ids : ""
-  vpc_security_group_ids != [] ? var.aws_security_group : ""
+  vpc_subnet_ids       = var.subnet_ids !== [] ? var.subnet_ids : ""
+  vpc_security_group_ids  = var.aws_security_group !== [] ? var.aws_security_group : ""
 
 }
