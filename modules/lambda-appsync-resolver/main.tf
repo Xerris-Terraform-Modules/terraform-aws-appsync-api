@@ -219,7 +219,7 @@ resource "aws_lambda_function" "appsync_lambda" {
   package_type         = "Image"
   
   
-  dynamic "vpc_config" {
+  vpc_config {
     ##for_each = var.subnet_ids != [] && var.vpc_security_group_ids != [] ? [true] : []
     content {
       subnet_ids       = var.subnet_ids == [] ? [] : var.subnet_ids
