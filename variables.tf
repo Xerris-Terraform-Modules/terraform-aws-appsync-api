@@ -63,12 +63,12 @@ variable "lambda_arn_iam_list" {
 }
 ////////Private Networking Variables//////////////////////////////////////////////////
 variable "subnet_ids" {
-    default     = ""
+    default     = []
     type        = list(string)
     description = "List of the subnet ids you want the lambda to reside in."
 }
 variable "vpc_security_group_ids" {
-    default     = ""
+    default     = []
     type        = list(string)
     description = "List of the security group ids you want the lambda to reside in."
 }
