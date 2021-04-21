@@ -200,8 +200,14 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   policy_arn    = aws_iam_policy.lambda_policy.arn
 }
 
-resource "aws_lambda_function" "appsync_lambda" {
+resource "time_sleep" "wait_30_seconds" {
   depends_on = ["aws_iam_role_policy_attachment.lambda_logs"]
+
+  create_duration = "16s"
+}
+
+resource "aws_lambda_function" "appsync_lambda" {
+  depends_on = ["time_sleep.wait_30_seconds"]
   function_name        = var.function_name
   description          = var.description
   timeout              = 30
