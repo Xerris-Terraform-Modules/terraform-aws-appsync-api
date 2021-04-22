@@ -202,6 +202,7 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 
 
 resource "aws_lambda_function" "appsync_lambda" {
+  depends_on = [aws_iam_role_policy_attachment.lambda_logs]
   function_name        = var.function_name
   description          = var.description
   timeout              = 30
