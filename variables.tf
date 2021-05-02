@@ -25,6 +25,11 @@ variable "schema" {
     description = "File path of graphql schema"
 }
 
+variable "ecr_url"{
+    default = ""
+    description = "ECR url"
+}
+
 ///////IAM Variables//////////////////////////////////////////////////
 variable "s3_readwrite_arn_iam_list" {
     default     = []
