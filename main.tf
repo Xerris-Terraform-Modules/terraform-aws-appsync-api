@@ -1,4 +1,3 @@
-
 resource "aws_appsync_graphql_api" "foe_api" {
   name = var.name
   schema = var.schema
@@ -10,15 +9,11 @@ resource "aws_appsync_graphql_api" "foe_api" {
   }
 }
 
-resource "aws_ecr_repository" "ecr_foe" {
-  name = var.name
-}
-
 module "lambda_source" {
     for_each = var.resolvers
 
     source = "./modules/lambda-appsync-resolver"
-    image_uri = "${aws_ecr_repository.ecr_foe.repository_url}:${var.image_uri}"
+    image_uri = "${var.ecr_url}:${var.image_uri}"
 
     function_name = each.key
     description = lookup(each.value, "description", null)
