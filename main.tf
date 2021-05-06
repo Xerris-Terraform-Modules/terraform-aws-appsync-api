@@ -14,6 +14,7 @@ module "lambda_source" {
 
     source = "./modules/lambda-appsync-resolver"
     image_uri = "${var.ecr_url}:${var.image_uri}"
+    env = var.env
 
     function_name = each.key
     description = lookup(each.value, "description", null)

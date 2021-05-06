@@ -13,6 +13,9 @@ variable "field" {
 variable "entrypoint" {
     description = "Entrypoint of code"
 }
+variable "env" {
+    description = "Environment of deployment"
+}
 variable "image_uri" {
     description = "Image uri of container with lambda code"
 }
