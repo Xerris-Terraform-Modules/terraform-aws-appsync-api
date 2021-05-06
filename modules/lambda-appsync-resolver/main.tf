@@ -109,6 +109,13 @@ data "aws_iam_policy_document" "lambda_policy_document" {
     ]
     resources = ["*"]
   }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ses:SendRawEmail",
+    ]
+    resources = ["*"]
+  }
   dynamic "statement" {
     for_each = var.s3_readwrite_arn_iam_list 
     content {
