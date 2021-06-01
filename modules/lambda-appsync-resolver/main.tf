@@ -53,14 +53,6 @@ resource "aws_appsync_resolver" "lambda_resolver" {
   api_id            = var.appsync_id
   field             = var.field
   data_source       = aws_appsync_datasource.lambda_datasource.name
-  request_template = <<EOF
-{
-    "version" : "2017-02-28",
-    "operation": "Invoke",
-    "payload": $util.toJson($context)
-}
-EOF
-  response_template = "$util.toJson($ctx.result)"
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
